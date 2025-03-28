@@ -22,6 +22,8 @@ Las específicaciones del sistema con las que se hicieron pruebas fueron las sig
 # Compilación
 Para la compilación del código, se uso el compilador g++, para su uso desde terminal tendría que ir a la dirección del archivo desde la terminal, desde ahí, poner 'g++' junto la dirección del archivo seguido de '-o' y el nombre del archivo ejecutable, el archivo ejecutable lo puede abrir desde la terminal o desde el ejecutable creado
 
+**Recomendación para su ejecución:** No deje ningún proceso externo activo de preferencia, para impedir que el procesador de su dispositivo este sobrecargado, esto puede llegar a afectar de forma significativa en su velocidad de ejecución
+
 # Descripción de algoritmos
 - **Ordenamiento por Inserción:** Este algoritmo recibe una sucesión y ordena sus elementos en orden no decreciente comparando un valor inicial con los siguientes valores en la sucesión hasta encontrar uno menor, después de esto compara ese valor menor con todos los valores anteriores de la sucesión para encontrar en donde se debe posicionar.
 
