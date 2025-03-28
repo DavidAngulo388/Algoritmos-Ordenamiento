@@ -1,3 +1,12 @@
+/*Aclaracion a falta de acentos de algunas palabras:
+Por cosas de interpretacion de los caracteres especiales de algunos compiladores, estos no se pueden llegar a mostrar
+esto incluye a los acentos. Aquellos simbolos de interrogacion que pueden llegar a salir son "enies"
+*/
+
+/*
+Autor: David Angulo
+Fecha de elaboracion: 27 de Marzo del 2025
+*/
 #include <cstdlib>
 #include <chrono>
 #include <iostream>
@@ -28,7 +37,10 @@ void EjecutarYRegistrar(void (*algoritmo)(int[], int), const string& nombreArchi
 
 int main() {
     srand(time(nullptr));
-
+    /*
+    La funcion 'main' se dedica solamente al manejo del resto de funciones y la impresion del ultimo mensaje, asegurando
+    al usuario que se ejecuto el programa de manera correcta y que se generaron los archivos csv.
+    */
     EjecutarYRegistrar(AlgoritmoDeInsercion, "1_Insercion_Ordenamiento.csv", "Insercion");
     EjecutarYRegistrar(AlgoritmoDeBurbuja, "2_Burbuja_Ordenamiento.csv", "Burbuja");
     EjecutarYRegistrar(HeapSort, "3_HeapSort_Ordenamiento.csv", "HeapSort");
@@ -42,9 +54,9 @@ int main() {
     return 0;
 }
 /*Esta función se encarga de la creación de los archivos CSV, las iteraciones y la impresión de los arreglos/tiempos, tanto en el programa
-principal como en el CSV (para los tiempos)*/
+principal como en el CSV (para los tiempos), en general, es el corazon del programa*/
 void EjecutarYRegistrar(void (*algoritmo)(int[], int), const string& nombreArchivo, const string& nombreAlgoritmo) {
-    ofstream archivo(nombreArchivo);
+    ofstream archivo(nombreArchivo); //Creacion del archivo CSV, donde se imprimira el tiempo tomado por cada iteracion junto al tamaño
     if (!archivo.is_open()) {
         cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << endl;
         return;
@@ -76,7 +88,7 @@ void EjecutarYRegistrar(void (*algoritmo)(int[], int), const string& nombreArchi
 
 
             auto inicio = chrono::high_resolution_clock::now(); //Cronometro que se encarga de registrar el tiempo que tardo cada iteración en completarse
-            algoritmo(s, k); //Aunque lleve el nombre solamente "algoritmo", desde la función se llamo un puntero a función el cuál llama al algoritmo
+            algoritmo(s, k); //Aunque lleve el nombre solamente "algoritmo", desde la función que ejecuta el programa se llamo un puntero a función el cuál llama al algoritmo
             auto fin = chrono::high_resolution_clock::now();
             chrono::duration<double, nano> duracion = fin - inicio;
 
@@ -96,14 +108,14 @@ void EjecutarYRegistrar(void (*algoritmo)(int[], int), const string& nombreArchi
         }
         archivo << endl;
     }
-    archivo.close();
+    archivo.close(); //Se cierra el archivo CSV, porque en caso de que no se cierre puede llegar a dar un error.
 }
 /**-----------------Algoritmo de Mezcla/Merge Sort-----------------**/
 void AlgoritmoDeMezcla(int s[], int inicio, int fin) {
     if (inicio >= fin) return;
     int medio = (inicio + fin) / 2;
-    AlgoritmoDeMezcla(s, inicio, medio);
-    AlgoritmoDeMezcla(s, medio + 1, fin);
+    AlgoritmoDeMezcla(s, inicio, medio); //Esta es la parte recursiva del algoritmo de mezcla, va dividiendo poco a poco en mitades el arreglo, esta es desde el s[0] a s[mitad]
+    AlgoritmoDeMezcla(s, medio + 1, fin); //Esta es desde el s[mitad+1] a s[fin]
     Mezcla(s, inicio, medio, fin);
 }
 
@@ -112,11 +124,11 @@ void Mezcla(int s[], int inicio, int medio, int fin) {
     int n2 = fin - medio;
     int* L = new int[n1]; //En lugar de tomar crear los punteros de forma "normal" para el Merge, se crearon como punteros para mayor rapidez
     int* R = new int[n2];
-    for (int i = 0; i < n1; i++) L[i] = s[inicio + i];
+    for (int i = 0; i < n1; i++) L[i] = s[inicio + i]; //El algoritmo va comparando los valores de L y R, como estos ya estan ordenados el menor entre los 2 aunque sea de un tamaño mayor a 1 va a ser el menor en ese conjunto
     for (int j = 0; j < n2; j++) R[j] = s[medio + 1 + j];
     int i = 0, j = 0, k = inicio;
     while (i < n1 && j < n2) s[k++] = (L[i] <= R[j]) ? L[i++] : R[j++];
-    while (i < n1) s[k++] = L[i++];
+    while (i < n1) s[k++] = L[i++]; //Los valores que lleguen a sobrar al momento de terminar de ordenar alguno de los 2 arreglos seran puestos en el nuevo arreglo
     while (j < n2) s[k++] = R[j++];
     delete[] L;
     delete[] R;
@@ -125,8 +137,8 @@ void Mezcla(int s[], int inicio, int medio, int fin) {
 /**-----------------Algoritmo de Inserción-----------------**/
 void AlgoritmoDeInsercion(int s[], int n) {
     for (int m = 1; m < n; ++m) {
-        int val = s[m];
-        int j = m - 1;
+        int val = s[m]; //Variable temporal para guardar el valor que se va a cambiar
+        int j = m - 1; //Aqui sucede la comparacion hasta que se llegue a encontrar un numero menor
         while (j >= 0 && s[j] > val) {
             s[j + 1] = s[j];
             --j;
@@ -137,7 +149,7 @@ void AlgoritmoDeInsercion(int s[], int n) {
 
 /**-----------------Algoritmo de Burbuja/Bubble Sort-----------------**/
 void AlgoritmoDeBurbuja(int s[], int n) {
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < n - 1; i++) { //Simplemente va comparando hasta llegar al tamaño maximo del arreglo, uno por uno, haciendolo poco eficaz
         for (int j = 0; j < n - i - 1; j++) {
             if (s[j] > s[j + 1]) {
                 swap(s[j], s[j + 1]);
@@ -162,23 +174,28 @@ void BuildHeapSort(int s[], int n) {
 }
 
 void MaxHeapify(int s[], int i, int n) {
-    int izquierdo = 2 * i + 1;
-    int derecho = 2 * i + 2;
-    int mayor = i;
+    int izquierdo = 2 * i + 1; // Indice del hijo izquierdo
+    int derecho = 2 * i + 2;   // Indice del hijo derecho
+    int mayor = i; // Suponemos que la raiz es el mayor
+    
+    // Comparar con el hijo izquierdo
     if (izquierdo < n && s[izquierdo] > s[mayor]) {
         mayor = izquierdo;
     }
+    // Comparar con el hijo derecho
     if (derecho < n && s[derecho] > s[mayor]) {
         mayor = derecho;
     }
+    // Si el mayor no es la raiz, intercambiar y continuar
     if (mayor != i) {
         swap(s[i], s[mayor]);
-        MaxHeapify(s, mayor, n);
+        MaxHeapify(s, mayor, n); // Recursivamente asegurar la propiedad de monticulo
     }
 }
 
 /**-----------------Algoritmo de Shell/Shell Sort-----------------**/
 void ShellSort(int s[], int n) {
+    //Aqui se va haciendo mas pequeños los gaps con los que se comparan en el algoritmo de shell, hasta que llegue a un gap igual a 1
     for (int gap = n / 2; gap > 0; gap /= 2) {
         for (int i = gap; i < n; i++) {
             int temp = s[i];
@@ -193,6 +210,7 @@ void ShellSort(int s[], int n) {
 }
 
 /**-----------------Algoritmo de Selección/Selection Sort-----------------**/
+// Recorre el arreglo y selecciona el menor elemento para colocarlo en su posición correcta
 void SelectionSort(int s[], int n) {
     for (int i = 0; i < n - 1; i++) {
         int min_idx = i;
@@ -201,25 +219,30 @@ void SelectionSort(int s[], int n) {
                 min_idx = j;
             }
         }
-        swap(s[i], s[min_idx]);
+        swap(s[i], s[min_idx]); // Intercambia el menor elemento encontrado con el actual
     }
 }
 
+/**-----------------Quick Sort-----------------**/
+// Utiliza el esquema de particion para dividir el arreglo y ordenar de manera recursiva
 void QuickSort(int s[], int inicio, int fin) {
     if (inicio >= fin) return;
     int pivote_idx = Partition(s, inicio, fin);
-    QuickSort(s, inicio, pivote_idx - 1);
-    QuickSort(s, pivote_idx + 1, fin);
+    QuickSort(s, inicio, pivote_idx - 1); // Ordena la parte izquierda
+    QuickSort(s, pivote_idx + 1, fin);   // Ordena la parte derecha
 }
 
+// Función de particion utilizada en QuickSort
+// Coloca el pivote en su posición correcta y reorganiza los elementos
 int Partition(int s[], int inicio, int fin) {
-    int pivote = s[fin];
+    int pivote = s[fin]; // Se elige el ultimo elemento como pivote
     int i = inicio - 1;
     for (int j = inicio; j < fin; j++) {
         if (s[j] <= pivote) {
             swap(s[++i], s[j]);
         }
     }
-    swap(s[i + 1], s[fin]);
+    swap(s[i + 1], s[fin]); // Coloca el pivote en su posicion correcta
     return i + 1;
 }
+
