@@ -49,7 +49,9 @@ Se podrían mencionar los diferentes casos
 - El **algoritmo de burbuja** fue el más lento de todos, tomando en total 3587158.4 nanosegundos (3.52 milisegundos) en promedio en el tamaño 1000, una diferencia de 2 milisegundos con el segundo peor tiempo en tamaño 1000 con el **algoritmo de selección**.
 - El **Quick Sort** fue el más rápido de todos, tomando en total 103261 nanosegundos (0.103 milisegundos) en promedio en el tamaño 1000, una diferencia de 0.02 milisegundos con el segundo mejor tiempo en tamaño 1000 con el **Shell Sort**.
 - El **Merge Sort** y **Shell Sort** son los algoritmos con mayor ruido en sus gráficas, esto puede ser causado por problema en el procesador o ruido generado por el sistema operativo, esto es más notable con **Merge Sort** que en algunos puntos anteriores al tamaño 1000 tarda mayor tiempo en ordenar los datos.
-- 
+
+# Conclusión
+Desde tiempos inmemoriables, con la existencia de números mayores que otros, hemos buscado maneras para poder ordenarlos de forma no ascendente más rápidas que otras, esto mismo se vio desde el inicio de la computación, teniendo cientos de algoritmos de ordenamiento distintos, algunos más eficaces que otros, pero todos con el mismo objetivo. En lo general está práctica me ayudo a ver la funcionalidad, eficacia y rápidez de alguno de estos algoritmos y entender la popularidad de la burbuja, al final del día, este proyecto me ha sido útil para comprenderlos, no solo en un código, sino de forma lógica.
 
 
 
