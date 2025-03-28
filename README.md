@@ -20,7 +20,11 @@ Las específicaciones del sistema con las que se hicieron pruebas fueron las sig
 - **Sistema Operativo: Windows 11 Pro**
 
 # Compilación
-Para la compilación del código, se uso el compilador g++, para su uso desde terminal tendría que ir a la dirección del archivo desde la terminal, desde ahí, poner 'g++' junto la dirección del archivo seguido de '-o' y el nombre del archivo ejecutable, el archivo ejecutable lo puede abrir desde la terminal o desde el ejecutable creado
+Para la compilación del código, se uso el compilador g++, para su uso desde terminal tendría que ir a la dirección del archivo desde la terminal, desde ahí, poner 'g++' junto la dirección del archivo seguido de '-o' y el nombre del archivo ejecutable, el archivo ejecutable lo puede abrir desde la terminal o desde el ejecutable creado, como se muestra en el siguiente ejemplo:
+```
+g++ AlgoritmosDeOrdenamiento.cpp -o AlgoritmosDeOrdenamiento
+
+```
 
 **Recomendación para su ejecución:** No deje ningún proceso externo activo de preferencia, para impedir que el procesador de su dispositivo este sobrecargado, esto puede llegar a afectar de forma significativa en su velocidad de ejecución
 
